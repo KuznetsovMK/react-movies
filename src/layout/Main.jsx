@@ -17,9 +17,11 @@ class Main extends React.Component {
             )
     }
 
-    searchMovies = (str) => {
+    searchMovies = (str, type = 'all') => {
         fetch(
-            `https://www.omdbapi.com/?apikey=3cc29541&s=${str}`
+            `https://www.omdbapi.com/?apikey=3cc29541&&s=${str}${
+                type !== 'all' ? `&type=${type}` : ''
+            }`
         )
             .then((response) => response.json())
             .then((data) =>
@@ -33,7 +35,7 @@ class Main extends React.Component {
         return (
             <main className='container content'>
                 <Search searchMovies={this.searchMovies}/>
-                {movies.length ? <Movies movies={movies}/> : <Preloader/> }
+                {movies.length ? <Movies movies={movies}/> : <Preloader/>}
             </main>
         );
     }
